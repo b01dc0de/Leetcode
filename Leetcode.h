@@ -97,6 +97,19 @@ namespace Leetcode_0021
     void RunTest();
 }
 
+namespace Leetcode_0026
+{
+    using std::vector;
+
+    class Solution
+    {
+    public:
+        int removeDuplicates(vector<int>& nums);
+    };
+
+    void RunTest();
+}
+
 namespace Leetcode_0058
 {
     using std::string;

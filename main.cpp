@@ -3,7 +3,7 @@
 
 int main()
 {
-    Leetcode_0058::RunTest();
+    Leetcode_0026::RunTest();
 
     return 0;
 }
