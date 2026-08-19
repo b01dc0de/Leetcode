@@ -28,6 +28,18 @@ namespace Leetcode_0009
     void RunTest();
 }
 
+namespace Leetcode_0013
+{
+    using std::string;
+
+    class Solution {
+    public:
+        int romanToInt(string s);
+    };
+
+    void RunTest();
+}
+
 namespace Leetcode_0014
 {
     using std::string;
