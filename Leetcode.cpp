@@ -112,3 +112,59 @@ namespace Leetcode_0009
         return;
     }
 }
+
+namespace Leetcode_0014
+{
+    /*
+        Leetcode_0014: Longest Common Prefix
+
+        Write a function to find the longest common prefix string amongst an array of strings.
+        If there is no common prefix, return an empty string "".
+
+        Constraints:
+            1 <= strs.length <= 200
+            0 <= strs[i].length <= 200
+            strs[i] consists of only lowercase English letters if it is non-empty.
+    */
+    using std::string;
+    using std::vector;
+
+    string Solution::longestCommonPrefix(vector<string>& strs)
+    {
+        int PrefixLength = 0;
+
+        bool bFinished = false;
+        while (!bFinished && strs[0].length() > PrefixLength)
+        {
+            char NextChar = strs[0][PrefixLength];
+            for (int StrsIdx = 1; StrsIdx < strs.size(); StrsIdx++)
+            {
+                if (strs[StrsIdx].length() <= PrefixLength || strs[StrsIdx][PrefixLength] != NextChar)
+                {
+                    bFinished = true;
+                    break;
+                }
+            }
+
+            if (!bFinished) { PrefixLength++; }
+        }
+
+        string Result = strs[0].substr(0, PrefixLength);
+        return Result;
+    }
+
+    void RunTest()
+    {
+        Solution TestSolution;
+
+        vector<string> Ex1_strs = {"flower", "flow", "flight"};
+        string Ex1_ExpectedResult = "fl";
+        string Ex1_Output = TestSolution.longestCommonPrefix(Ex1_strs);
+
+        vector<string> Ex2_strs = {"dog", "racecar", "car"};
+        string Ex2_ExpectedResult = "";
+        string Ex2_Output = TestSolution.longestCommonPrefix(Ex2_strs);
+
+        return;
+    }
+}

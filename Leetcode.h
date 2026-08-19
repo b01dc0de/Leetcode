@@ -1,6 +1,7 @@
 #ifndef LEETCODE_H
 #define LEETCODE_H
 
+#include <string>
 #include <vector>
 
 namespace Leetcode_0001
@@ -22,6 +23,19 @@ namespace Leetcode_0009
     {
     public:
         bool isPalindrome(int x);
+    };
+
+    void RunTest();
+}
+
+namespace Leetcode_0014
+{
+    using std::string;
+    using std::vector;
+
+    class Solution {
+    public:
+        string longestCommonPrefix(vector<string>& strs);
     };
 
     void RunTest();
