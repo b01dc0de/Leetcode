@@ -429,28 +429,75 @@ namespace Leetcode_0021
         ListNode Ex1_list2_2{4, nullptr};
         ListNode Ex1_list2_1{3, &Ex1_list2_2};
         ListNode Ex1_list2_0{1, &Ex1_list2_1};
-        string Ex1_ExpectedOutput = "[1,1,2,3,4,4]";
+        string Ex1_ExpectedResult = "[1,1,2,3,4,4]";
         ListNode* Ex1_ResultNode = TestSolution.mergeTwoLists(&Ex1_list1_0, &Ex1_list2_0);
-        string Ex1_Result = ListNodeToSring(Ex1_ResultNode);
+        string Ex1_Output = ListNodeToSring(Ex1_ResultNode);
 
 
 
         ListNode* Ex2_list1 = nullptr;
         ListNode* Ex2_list2 = nullptr;
-        string Ex2_ExpectedOutput = "[]";
+        string Ex2_ExpectedResult = "[]";
         ListNode* Ex2_ResultNode = TestSolution.mergeTwoLists(Ex2_list1, Ex2_list2);
-        string Ex2_Result = ListNodeToSring(Ex2_ResultNode);
+        string Ex2_Output = ListNodeToSring(Ex2_ResultNode);
 
 
 
         ListNode *Ex3_list1 = nullptr;
         ListNode Ex3_list2_0{0, nullptr};
-        string Ex3_ExpectedOutput = "[0]";
+        string Ex3_ExpectedResult = "[0]";
         ListNode* Ex3_ResultNode = TestSolution.mergeTwoLists(Ex3_list1, &Ex3_list2_0);
-        string Ex3_Result = ListNodeToSring(Ex3_ResultNode);
+        string Ex3_Output = ListNodeToSring(Ex3_ResultNode);
 
         return;
     }
 }
 
+namespace Leetcode_0058
+{
+    /*
+        Leetcode_0058: Length of Last Word
 
+        Given a string s consisting of words and spaces, return the length of the last word in the string.
+        A word is a maximal consisting of non-space characters only.
+
+        Constraints:
+            1 <= s.length <= 104
+            s consists of only English letters and spaces ' '.
+            There will be at least one word in s.
+    */
+
+    int Solution::lengthOfLastWord(string s)
+    {
+        if (s.length() == 0) { return 0; }
+
+        int Idx = s.length() - 1;
+        while (Idx >= 0 && s[Idx] == ' ') { Idx--; }
+
+        int LastWordEndIdx = -1;
+        if (Idx >= 0 && s[Idx] != ' ') { LastWordEndIdx = Idx; }
+
+        while (Idx > 0 && s[Idx] != ' ') { Idx--; }
+        if (s[Idx] == ' ') { return LastWordEndIdx - Idx; }
+        else { return LastWordEndIdx - Idx + 1; }
+    }
+
+    void RunTest()
+    {
+        Solution TestSolution;
+
+        string Ex1_s = "Hello World";
+        int Ex1_ExpectedResult = 5;
+        int Ex1_Output = TestSolution.lengthOfLastWord(Ex1_s);
+
+        string Ex2_s = "   fly me   to   the moon  ";
+        int Ex2_ExpectedResult = 4;
+        int Ex2_Output = TestSolution.lengthOfLastWord(Ex2_s);
+
+        string Ex3_s = "luffy is still joyboy";
+        int Ex3_ExpectedResult = 6;
+        int Ex3_Output = TestSolution.lengthOfLastWord(Ex3_s);
+
+        return;
+    }
+}
