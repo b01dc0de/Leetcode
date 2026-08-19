@@ -57,3 +57,58 @@ namespace Leetcode_0001
         return;
     }
 }
+
+namespace Leetcode_0009
+{
+    /*
+        Leetcode_0009: Palindrome Number
+
+        Given an integer x, return true if x is a , and false otherwise.
+
+        Constraints:
+            -2^31 <= x <= 2^31 - 1
+    */
+
+    bool Solution::isPalindrome(int x)
+    {
+        if (x < 0) { return false; }
+
+        std::vector<char> AsString;
+
+        while (x > 0)
+        {
+            int Remainder = x % 10;
+            char RemainderAsChar = Remainder + 0x30;
+            AsString.push_back(Remainder);
+            x /= 10;
+        }
+
+        for (int Idx = 0; Idx < AsString.size() / 2; Idx++)
+        {
+            if (AsString[Idx] != AsString[AsString.size() - Idx - 1])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void RunTest()
+    {
+        Solution TestSolution;
+
+        int Ex1_x = 121;
+        bool Ex1_ExpectedResult = true;
+        bool Ex1_Output = TestSolution.isPalindrome(Ex1_x);
+
+        int Ex2_x = -121;
+        bool Ex2_ExpectedResult = false;
+        bool Ex2_Output = TestSolution.isPalindrome(Ex2_x);
+
+        int Ex3_x = 10;
+        bool Ex3_ExpectedResult = false;
+        bool Ex3_Output = TestSolution.isPalindrome(Ex2_x);
+
+        return;
+    }
+}
