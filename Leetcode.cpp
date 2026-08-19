@@ -15,7 +15,6 @@ namespace Leetcode_0001
             -10^9 <= target <= 10^9
             Only one valid answer exists.
     */
-    using std::vector;
 
     vector<int> Solution::twoSum(vector<int>& nums, int target)
     {
@@ -68,6 +67,7 @@ namespace Leetcode_0009
         Constraints:
             -2^31 <= x <= 2^31 - 1
     */
+    using std::vector;
 
     bool Solution::isPalindrome(int x)
     {
@@ -139,6 +139,7 @@ namespace Leetcode_0013
             s contains only the characters ('I', 'V', 'X', 'L', 'C', 'D', 'M').
             It is guaranteed that s is a valid roman numeral in the range [1, 3999].
     */
+
     int Solution::romanToInt(string s)
     {
         auto GetSymbolValue = [](char Symbol) -> int
@@ -209,8 +210,6 @@ namespace Leetcode_0014
             0 <= strs[i].length <= 200
             strs[i] consists of only lowercase English letters if it is non-empty.
     */
-    using std::string;
-    using std::vector;
 
     string Solution::longestCommonPrefix(vector<string>& strs)
     {
@@ -251,3 +250,207 @@ namespace Leetcode_0014
         return;
     }
 }
+
+namespace Leetcode_0020
+{
+    /*
+        Leetcode_0020: Valid Parentheses
+
+        Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+        An input string is valid if:
+            Open brackets must be closed by the same type of brackets.
+            Open brackets must be closed in the correct order.
+            Every close bracket has a corresponding open bracket of the same type.
+
+        Constraints:
+            1 <= s.length <= 104
+            s consists of parentheses only '()[]{}'.
+    */
+    using std::vector;
+
+    bool Solution::isValid(string s)
+    {
+        vector<char> BracketStack;
+        bool bValid = true;
+
+        for (int Idx = 0; bValid && Idx < s.length(); Idx++)
+        {
+            switch (s[Idx])
+            {
+                case '(':
+                case '[':
+                case '{':
+                {
+                    BracketStack.push_back(s[Idx]);
+                } break;
+
+                case ')':
+                {
+                    if (!BracketStack.empty() && BracketStack.back() == '(') { BracketStack.pop_back(); }
+                    else { bValid = false; }
+                } break;
+                case ']':
+                {
+                    if (!BracketStack.empty() && BracketStack.back() == '[') { BracketStack.pop_back(); }
+                    else { bValid = false; }
+                } break;
+                case '}':
+                {
+                    if (!BracketStack.empty() && BracketStack.back() == '{') { BracketStack.pop_back(); }
+                    else { bValid = false; }
+                } break;
+            }
+        }
+
+        return bValid && BracketStack.empty();
+    }
+
+    void RunTest()
+    {
+        Solution TestSolution;
+
+        string Ex1_s = "()";
+        bool Ex1_ExpectedResult = true;
+        bool Ex1_Output = TestSolution.isValid(Ex1_s);
+
+        string Ex2_s = "()[]{}";
+        bool Ex2_ExpectedResult = true;
+        bool Ex2_Output = TestSolution.isValid(Ex2_s);
+
+        string Ex3_s = "(]";
+        bool Ex3_ExpectedResult = false;
+        bool Ex3_Output = TestSolution.isValid(Ex3_s);
+
+        string Ex4_s = "([])";
+        bool Ex4_ExpectedResult = true;
+        bool Ex4_Output = TestSolution.isValid(Ex4_s);
+
+        string Ex5_s = "([)]";
+        bool Ex5_ExpectedResult = false;
+        bool Ex5_Output = TestSolution.isValid(Ex5_s);
+
+        return;
+    }
+}
+
+namespace Leetcode_0021
+{
+    /*
+        Leetcode_0021: Merge Two Sorted Lists
+
+        You are given the heads of two sorted linked lists list1 and list2.
+        Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.
+        Return the head of the merged linked list.
+
+        Constraints:
+            The number of nodes in both lists is in the range [0, 50].
+            -100 <= Node.val <= 100
+            Both list1 and list2 are sorted in non-decreasing order.
+    */
+    using std::string;
+
+    ListNode* Solution::mergeTwoLists(ListNode* list1, ListNode* list2)
+    {
+        if (!list1 && !list2) { return nullptr; }
+        else if (list1 && !list2) { return list1; }
+        else if (!list1 && list2) { return list2; }
+
+        ListNode* Result = nullptr;
+        ListNode* CurrNode = nullptr;
+        if (list1->val < list2->val)
+        {
+            CurrNode = list1;
+            list1 = list1->next;
+        }
+        else
+        {
+            CurrNode = list2;
+            list2 = list2->next;
+        }
+        Result = CurrNode;
+
+        while (list1 || list2)
+        {
+            if (list1 && !list2)
+            {
+                CurrNode->next = list1;
+                CurrNode = list1;
+                list1 = list1->next;
+            }
+            else if (!list1 && list2)
+            {
+                CurrNode->next = list2;
+                CurrNode = list2;
+                list2 = list2->next;
+            }
+            else
+            {
+                if (list1->val < list2->val)
+                {
+                    CurrNode->next = list1;
+                    CurrNode = list1;
+                    list1 = list1->next;
+                }
+                else
+                {
+                    CurrNode->next = list2;
+                    CurrNode = list2;
+                    list2 = list2->next;
+                }
+            }
+        }
+
+        return Result;
+    }
+
+    string ListNodeToSring(ListNode* list)
+    {
+        string Result;
+        Result += '[';
+        while (list)
+        {
+            Result += (char)(list->val + 0x30);
+            list = list->next;
+            if (list) { Result += ','; }
+        }
+        Result += ']';
+
+        return Result;
+    }
+
+    void RunTest()
+    {
+        Solution TestSolution;
+
+        ListNode Ex1_list1_2{4, nullptr};
+        ListNode Ex1_list1_1{2, &Ex1_list1_2};
+        ListNode Ex1_list1_0{1, &Ex1_list1_1};
+        ListNode Ex1_list2_2{4, nullptr};
+        ListNode Ex1_list2_1{3, &Ex1_list2_2};
+        ListNode Ex1_list2_0{1, &Ex1_list2_1};
+        string Ex1_ExpectedOutput = "[1,1,2,3,4,4]";
+        ListNode* Ex1_ResultNode = TestSolution.mergeTwoLists(&Ex1_list1_0, &Ex1_list2_0);
+        string Ex1_Result = ListNodeToSring(Ex1_ResultNode);
+
+
+
+        ListNode* Ex2_list1 = nullptr;
+        ListNode* Ex2_list2 = nullptr;
+        string Ex2_ExpectedOutput = "[]";
+        ListNode* Ex2_ResultNode = TestSolution.mergeTwoLists(Ex2_list1, Ex2_list2);
+        string Ex2_Result = ListNodeToSring(Ex2_ResultNode);
+
+
+
+        ListNode *Ex3_list1 = nullptr;
+        ListNode Ex3_list2_0{0, nullptr};
+        string Ex3_ExpectedOutput = "[0]";
+        ListNode* Ex3_ResultNode = TestSolution.mergeTwoLists(Ex3_list1, &Ex3_list2_0);
+        string Ex3_Result = ListNodeToSring(Ex3_ResultNode);
+
+        return;
+    }
+}
+
+
