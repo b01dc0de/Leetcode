@@ -110,6 +110,19 @@ namespace Leetcode_0026
     void RunTest();
 }
 
+namespace Leetcode_0027
+{
+    using std::vector;
+
+    class Solution {
+    public:
+        int removeElement(vector<int>& nums, int val);
+    };
+
+    void RunTest();
+
+}
+
 namespace Leetcode_0058
 {
     using std::string;

@@ -516,6 +516,55 @@ namespace Leetcode_0026
     }
 }
 
+namespace Leetcode_0027
+{
+    /*
+        Leetcode_0027: Remove Element
+
+        Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the elements may be changed. Then return the number of elements in nums which are not equal to val.
+        Consider the number of elements in nums which are not equal to val be k, to get accepted, you need to do the following things:
+        Change the array nums such that the first k elements of nums contain the elements which are not equal to val. The remaining elements of nums are not important as well as the size of nums.
+        Return k.
+
+        Constraints:
+            0 <= nums.length <= 100
+            0 <= nums[i] <= 50
+            0 <= val <= 100
+    */
+
+    int Solution::removeElement(vector<int> &nums, int val)
+    {
+        for (int Idx = nums.size() - 1; Idx >= 0; Idx--)
+        {
+            if (nums[Idx] == val)
+            {
+                vector<int>::const_iterator ToRemove = nums.begin() + Idx;
+                nums.erase(ToRemove);
+            }
+        }
+        return nums.size();
+    }
+
+    void RunTest()
+    {
+        Solution TestSolution;
+
+        vector<int> Ex1_nums = {3, 2, 2, 3};
+        int Ex1_val = 3;
+        vector<int> Ex1_Expected_nums = {2, 2};
+        int Ex1_ExpectedResult = 2;
+        int Ex1_Output = TestSolution.removeElement(Ex1_nums, Ex1_val);
+
+        vector<int> Ex2_nums = {0, 1, 2, 2, 3, 0, 4, 2};
+        int Ex2_val = 2;
+        vector<int> Ex2_Expected_nums = {0, 1, 3, 0, 4};
+        int Ex2_ExpectedResult = 5;
+        int Ex2_Output = TestSolution.removeElement(Ex2_nums, Ex2_val);
+
+        return;
+    }
+}
+
 namespace Leetcode_0058
 {
     /*
